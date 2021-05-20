@@ -1,5 +1,5 @@
-#include "PersonalDetails.cpp"
-#include "Bank.cpp"
+#include "PersonalDetails.h"
+#include "Bank.h"
 #include "UserAccounts.h"
 #include <iostream>
 #include <vector>
