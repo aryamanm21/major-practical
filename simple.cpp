@@ -1,26 +1,33 @@
 #include "simple.h"
 
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <string>
 
 using namespace std;
 
-simple::simple() {
-
+simple::simple()
+{
 }
 
-int simple::calculate_monthly_interest (int month) {
+simple::simple(account user)
+{
+    currentUser = user;
+}
+
+int simple::calculate_monthly_interest(int month)
+{
     int monthly = 0;
-    monthly = balance*interest_rate;
+    monthly = currentUser.get_balance() * currentUser.get_interest_rate();
     return monthly;
 }
 
-int simple::calculate_interest (int month) {
+int simple::calculate_interest(int month)
+{
     int money = 0;
-    money = balance + balance*interest_rate*month;
+    money = currentUser.get_balance() + currentUser.get_balance() * currentUser.get_interest_rate();
     return money;
 }
 
-simple::~simple() {
-
+simple::~simple()
+{
 }

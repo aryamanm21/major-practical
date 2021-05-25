@@ -5,13 +5,17 @@
 #include <string>
 
 #include "account.h"
+#include "PersonalDetails.h"
 
-class compound {
+class compound
+{
 private:
+    account currentUser;
 
 public:
     compound();
-    int calculate_interest (int month);
+    compound(account user);
+    int calculate_interest(int month);
     ~compound();
 };
 

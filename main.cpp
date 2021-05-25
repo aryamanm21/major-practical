@@ -1,6 +1,6 @@
 #include "PersonalDetails.h"
-#include "Bank.h"
-#include "UserAccounts.h"
+// #include "Bank.h"
+#include "account.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -8,12 +8,14 @@ using namespace std;
 
 // FUNCTION DEFINITIONS
 // vector array to store everyone's personal details
+// memory allocation for object vector from stack
 vector<PersonalDetails> personalDetailsVector;
 
 // vector array to store everyone's user accounts
-// vector<UserAccounts> userAccountsVector;
+vector<account> userAccountsVector;
 
 // vector array to store bank information
+// is a bank vector necessary? because we are storing user accounts in the vector userAccounts vector
 // vector<Bank> bankVector;
 
 // main UI when user first logs into bank system
@@ -22,6 +24,12 @@ void mainscreen();
 // create user functionality. see function for details.
 void createUser();
 
+void Login();
+
+void resetPassword();
+
+void viewAccount(int account_index);
+
 // MAIN FUNCTION
 int main()
 {
@@ -29,13 +37,14 @@ int main()
     mainscreen();
 
     // print out users for debugging purposes. it works.
-    // for (int i = 0; i < personalDetailsVector.size(); i++)
-    // {
-    //     cout << personalDetailsVector[i].getFullName() << endl;
-    // }
+    for (int i = 0; i < personalDetailsVector.size(); i++)
+    {
+        cout << personalDetailsVector[i].getFullName() << endl;
+    }
     return 0;
 }
 
+// mainscreen function
 void mainscreen()
 {
     // exit is false so that the main screen loop runs at least once.
@@ -49,7 +58,9 @@ void mainscreen()
         int option;
         cout << "Hello there! What would you like to do?\nEnter the option:" << endl;
         cout << "1.) Create User" << endl;
-        cout << "2.) Exit" << endl;
+        cout << "2.) Login" << endl;
+        cout << "3.) Reset Password" << endl;
+        cout << "4.) Exit" << endl;
         cin >> option;
 
         // a switch statement for the menu logic
@@ -63,16 +74,21 @@ void mainscreen()
 
         // case which allows for user to exit
         case 2:
+            Login();
+            exit = true;
+            break;
+
+        // reset password functionality
+        case 3:
+            resetPassword();
+            exit = true;
+            break;
+
+        // exit the bank program
+        case 4:
             exit = true;
             cout << "Bye!" << endl;
             break;
-
-        // // case for user accounts or bank. commented out until their
-        // // functionality is added to their class files
-        // case 3:
-        //     option = 3;
-        //     exit = true;
-        //     break;
 
         // case where input is invalid.
         default:
@@ -146,3 +162,133 @@ void createUser()
     // return to the main screen
     mainscreen();
 };
+
+// function to view the person's account
+void viewAccount(int account_index)
+{
+    bool exit = false;
+
+    while (exit == false)
+    {
+        int option;
+        account currentUser(personalDetailsVector[account_index]);
+
+        cout << "Your Balance:" << currentUser.get_balance() << endl;
+        cout << "Your credit score:" << currentUser.get_credit_score() << endl;
+        cout << "Your interest rate on your loan:" << currentUser.get_interest_rate() << endl;
+        cout << "Your loan balance:" << currentUser.get_current_loan() << endl;
+        cout << "Your loan limit: " << currentUser.get_loan_limit();
+
+        cout << "What would you like to do?" << endl;
+        cout << "1.) Deposit " << endl;
+        cout << "2.) Withdraw " << endl;
+        cout << "3.) Pay installment " << endl;
+        cout << "4.) New loan " << endl;
+        cout << "5.) Transfer to another account " << endl;
+        cout << "6.) Exit " << endl;
+        cin >> option;
+
+        switch (option)
+        {
+        case 1:
+            double deposit;
+            cout << "Please enter deposit amount: " << endl;
+            cin >> deposit;
+            currentUser.deposit(deposit);
+            break;
+        case 2:
+            double withdraw;
+            cout << "Please enter withdrawal amount: " << endl;
+            cin >> withdraw;
+            currentUser.withdraw(withdraw);
+        case 3:
+            double pay;
+            cout << "Please enter how much you are paying off: " << endl;
+            cin >> pay;
+            currentUser.pay_loan(pay);
+        case 4:
+            double loan;
+            cout << "Please enter how much you would like to loan: " << endl;
+            while (loan + currentUser.get_current_loan() > personalDetailsVector[account_index].getAnnualIncome())
+            {
+                cout << "Sorry that exceeds your loan limit!\nPlease enter how much you would like to loan: " << endl;
+            }
+        }
+    }
+}
+
+// function to reset user password
+void resetPassword()
+{
+    bool exit = false;
+    string email;
+
+    while (exit == false)
+    {
+        cout << "Please enter your email:" << endl;
+        cin >> email;
+
+        for (int i = 0; i < personalDetailsVector.size(); i++)
+        {
+            if (email == personalDetailsVector[i].getEmail())
+            {
+                string answer;
+                cout << personalDetailsVector[i].getSecretQuestion() << endl;
+                cin >> answer;
+                if (answer == personalDetailsVector[i].getSecretAnswer())
+                {
+                    string new_password, confirm_password;
+                    cout << "Answered correctly! Please enter your new password:" << endl;
+                    while (new_password != confirm_password)
+                    {
+                        cout << "Please enter your new password:" << endl;
+                        cin >> new_password;
+                        cout << "Confirm password: " << endl;
+                        cin >> confirm_password;
+                        if (new_password != confirm_password)
+                        {
+                            cout << "Please try again!" << endl;
+                        }
+                    }
+                    cout << "Successfully set your new password: " << endl;
+                    mainscreen();
+                    exit = true;
+                }
+            }
+            else
+            {
+                cout << "Email does not exist! Try again!" << endl;
+            }
+        }
+    }
+}
+
+// function to login into account
+void Login()
+{
+    bool exit = false;
+    string email;
+    string password;
+
+    while (exit == false)
+    {
+        cout << "Please enter your email:" << endl;
+        cin >> email;
+        cout << "Please enter your password:" << endl;
+        cin >> password;
+
+        for (int i = 0; i < personalDetailsVector.size(); i++)
+        {
+            if (email == personalDetailsVector[i].getEmail() && password == personalDetailsVector[i].getPassword())
+            {
+                cout << "Sign in successful!" << endl;
+                viewAccount(i);
+                exit = true;
+            }
+            else
+            {
+                cout << "Email or password is incorrect!" << endl;
+            }
+        }
+    }
+}

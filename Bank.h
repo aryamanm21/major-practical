@@ -2,9 +2,9 @@
 
 #define BANK_H_
 
-#include "UserAccount.h"
+#include "simple.h"
+#include "account.h"
 #include "PersonalDetails.h"
-
 
 class Bank
 
@@ -14,30 +14,13 @@ private:
         int balance;
         int size;
         int max_size;
-        UserAccount*members;
+        account *members;
 
 public:
-// default constructor
+        // default constructor
         Bank();
-        // constructor for a bank with a given number of accounts
 
-        Bank(int size);
-        // returns the number of accounts in the bank
-
-        int get_current_number_of_accounts();
-        // returns the array of members of the Bank 
-        
-        UserAccount* get_members();
-        // Adds a user account
-        bool add_Account(UserAccount new_UserAccount);
-        // Th transfer balanace
-        UserAccounttransferBalance(Useraccount, int balance)
-        ~Bank();
+        // Transfer balanace
+        void transferBalance(account, int balance);
 };
 #endif
-
-
-
-
-
-

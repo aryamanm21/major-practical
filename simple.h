@@ -6,11 +6,15 @@
 
 #include "account.h"
 
-class simple {
+class simple
+{
 private:
+    account currentUser;
+
 public:
     simple();
-    int calculate_monthly_interest (int month);
+    simple(account user);
+    int calculate_monthly_interest(int month);
     int calculate_interest(int month);
     ~simple();
 };
