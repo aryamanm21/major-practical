@@ -20,6 +20,8 @@ private:
     int Annual_income;
 
 public:
+    // default constructor
+    PersonalDetails();
     // overidding default constructor that requires all details to create a profile of a person
     PersonalDetails(string personalDetailsArray[10])
     {
