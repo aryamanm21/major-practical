@@ -14,7 +14,7 @@ Bank::Bank()
 Bank::Bank(int size) : max_size(size), curr_size(0)
 
 {
-       // memory allocation with objects on the heap 
+       // memory allocation with objects on the heap
        members = new UserAccount[size];
 }
 // Returns no. of user accounts in the banking system
