@@ -1,5 +1,7 @@
 #include "PersonalDetails.h"
-// #include "Bank.h"
+#include "Bank.h"
+#include "simple.h"
+#include "compound.h"
 #include "account.h"
 #include <iostream>
 #include <vector>
@@ -159,6 +161,11 @@ void createUser()
     // adding the newUser to the vector array
     personalDetailsVector.push_back(newUser);
 
+    // pass account details to account
+    account newAccount(newUser);
+    // push into account array
+    userAccountsVector.push_back(newAccount);
+
     // return to the main screen
     mainscreen();
 };
@@ -171,13 +178,12 @@ void viewAccount(int account_index)
     while (exit == false)
     {
         int option;
-        account currentUser(personalDetailsVector[account_index]);
 
-        cout << "Your Balance:" << currentUser.get_balance() << endl;
-        cout << "Your credit score:" << currentUser.get_credit_score() << endl;
-        cout << "Your interest rate on your loan:" << currentUser.get_interest_rate() << endl;
-        cout << "Your loan balance:" << currentUser.get_current_loan() << endl;
-        cout << "Your loan limit: " << currentUser.get_loan_limit();
+        cout << "Your Balance:" << userAccountsVector[account_index].get_balance() << endl;
+        cout << "Your credit score:" << userAccountsVector[account_index].get_credit_score() << endl;
+        cout << "Your interest rate on your loan:" << userAccountsVector[account_index].get_interest_rate() << endl;
+        cout << "Your loan balance:" << userAccountsVector[account_index].get_current_loan() << endl;
+        cout << "Your loan limit: " << userAccountsVector[account_index].get_loan_limit();
 
         cout << "What would you like to do?" << endl;
         cout << "1.) Deposit " << endl;
@@ -194,22 +200,22 @@ void viewAccount(int account_index)
             double deposit;
             cout << "Please enter deposit amount: " << endl;
             cin >> deposit;
-            currentUser.deposit(deposit);
+            userAccountsVector[account_index].deposit(deposit);
             break;
         case 2:
             double withdraw;
             cout << "Please enter withdrawal amount: " << endl;
             cin >> withdraw;
-            currentUser.withdraw(withdraw);
+            userAccountsVector[account_index].withdraw(withdraw);
         case 3:
             double pay;
             cout << "Please enter how much you are paying off: " << endl;
             cin >> pay;
-            currentUser.pay_loan(pay);
+            userAccountsVector[account_index].pay_loan(pay);
         case 4:
             double loan;
             cout << "Please enter how much you would like to loan: " << endl;
-            while (loan + currentUser.get_current_loan() > personalDetailsVector[account_index].getAnnualIncome())
+            while (loan + userAccountsVector[account_index].get_current_loan() > personalDetailsVector[account_index].getAnnualIncome())
             {
                 cout << "Sorry that exceeds your loan limit!\nPlease enter how much you would like to loan: " << endl;
             }
@@ -287,8 +293,31 @@ void Login()
             }
             else
             {
-                cout << "Email or password is incorrect!" << endl;
+                cout << "Password is incorrect!" << endl;
             }
+        }
+        int option;
+        cout << "Email is incorrect!" << endl;
+        cout << "1.) Try again " << endl
+             << "2.) Create user " << endl
+             << "3.) Exit" << endl;
+        cin >> option;
+
+        switch (option)
+        {
+        case 1:
+            continue;
+            break;
+        case 2:
+            createUser();
+            exit = true;
+            break;
+        case 3:
+            exit = true;
+            break;
+        default:
+            cout << "Please try again! Type 1, 2 or 3 only" << endl;
+            break;
         }
     }
 }

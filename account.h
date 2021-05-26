@@ -21,12 +21,12 @@ public:
     account(PersonalDetails user);
     void deposit(double amount);
     void withdraw(double amount);
-    int get_balance();
+    double get_balance();
     void set_credit_score();
     int get_credit_score();
     void set_interest_rate();
     int get_interest_rate();
-    int get_current_loan();
+    double get_current_loan();
     void pay_loan(double amount);
     void make_loan(double amount);
     double get_loan_limit();

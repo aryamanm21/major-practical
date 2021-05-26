@@ -1,5 +1,5 @@
-all: main.o PersonalDetails.o account.o simple.o compound.o
-	clang++ main.o -o main
+all: main.o PersonalDetails.o account.o simple.o compound.o Bank.o
+	clang++ main.o PersonalDetails.o account.o simple.o compound.o Bank.o -o main
 
 main.o: main.cpp
 	clang++ -c main.cpp 
@@ -17,7 +17,7 @@ simple.o: simple.cpp simple.h
 	clang++ -c simple.cpp
 
 compound.o: compound.cpp compound.h
-	clang++ -c compound.cpp
+	clang++ -c compound.cpp 
 
 clean:
 	rm -rf *.o main

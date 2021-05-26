@@ -23,18 +23,7 @@ public:
     // default constructor
     PersonalDetails();
     // overidding default constructor that requires all details to create a profile of a person
-    PersonalDetails(string personalDetailsArray[10])
-    {
-        Full_name = personalDetailsArray[0];
-        Phone_number = personalDetailsArray[1];
-        Email = personalDetailsArray[2];
-        Secret_question = personalDetailsArray[3];
-        Secret_answer = personalDetailsArray[4];
-        Age = stoi(personalDetailsArray[5]);
-        Annual_income = stoi(personalDetailsArray[6]);
-        Username = personalDetailsArray[7];
-        Password = personalDetailsArray[8];
-    };
+    PersonalDetails(string personalDetailsArray[10]);
     // full name getter method
     string getFullName();
     // username getter method

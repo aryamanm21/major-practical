@@ -1,5 +1,22 @@
 #include "PersonalDetails.h"
 
+// default constructor
+PersonalDetails::PersonalDetails(){};
+
+// constructor
+PersonalDetails::PersonalDetails(string personalDetailsArray[10])
+{
+    Full_name = personalDetailsArray[0];
+    Phone_number = personalDetailsArray[1];
+    Email = personalDetailsArray[2];
+    Secret_question = personalDetailsArray[3];
+    Secret_answer = personalDetailsArray[4];
+    Age = stoi(personalDetailsArray[5]);
+    Annual_income = stoi(personalDetailsArray[6]);
+    Username = personalDetailsArray[7];
+    Password = personalDetailsArray[8];
+};
+
 // full name getter method
 string PersonalDetails::getFullName()
 {
