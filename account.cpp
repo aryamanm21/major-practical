@@ -1,8 +1,6 @@
-#include "PersonalDetails.h"
-#include "account.h"
-
 #include <iostream>
 #include <string>
+#include "account.h"
 
 using namespace std;
 
@@ -12,12 +10,13 @@ account::account()
     double current_loan = 0;
     int credit_score = 0;
     double interest_rate = 0;
+    double loan_limit = 0;
 }
 
 // when a user has an account, it will be passed to this constructor so that we can associate their account
 account::account(PersonalDetails user)
 {
-    currentUser = user;
+    // currentUser = user;
     double loan_limit = currentUser.getAnnualIncome() * 1.2;
 }
 
@@ -33,7 +32,7 @@ void account::withdraw(double amount)
     cout << "You have withdrawn " << amount << " dollars. Your account balance now is " << balance << ".\n";
 }
 
-int account::get_balance()
+double account::get_balance()
 {
     return balance;
 }
@@ -91,7 +90,7 @@ int account::get_interest_rate()
     return interest_rate;
 }
 
-int account::get_current_loan()
+double account::get_current_loan()
 {
     return current_loan;
 }
@@ -113,6 +112,7 @@ double account::get_loan_limit()
 {
     return loan_limit;
 }
+
 account::~account()
 {
 }
